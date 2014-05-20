@@ -4,6 +4,8 @@ Description=Modifies /etc/environment for CoreOS
 RequiresMountsFor=/usr/share/oem
 # we only want this to work on usr images
 ConditionPathIsMountPoint=/usr
+Wants=network.target
+After=network.target
 
 [Service]
 Type=oneshot
