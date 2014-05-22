@@ -1,0 +1,12 @@
+[Unit]
+Description=Wait for Network
+Wants=network.target
+Before=network.target network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/coreos/wait_for_network
+
+[Install]
+WantedBy=network-online.target
+

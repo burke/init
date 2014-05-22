@@ -1,0 +1,18 @@
+#!/bin/bash
+
+routable_ip () { ip route get 8.8.8.8 2>/dev/null | awk '{print $7}'; }
+interval=0.1 # seconds
+timeout=300000 # 5 minutes in milliseconds (must be multiple of interval)
+
+msecs=0
+while [ -z $(routable_ip) ] ; do
+	echo "interface not up after $msecs ms..."
+	sleep $interval
+	msecs=$((msecs+100))
+	if [ "$msecs" == "$timeout" ] ; then
+		echo "Gave up waiting for routable IP."
+		exit 1
+	fi
+done
+echo "Got routable IP $(routable_ip) after $msecs ms."
+exit 0

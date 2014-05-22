@@ -18,12 +18,15 @@ install:
 		$(DESTDIR)/usr/lib/systemd/system \
 		$(DESTDIR)/usr/lib/systemd/network \
 		$(DESTDIR)/usr/lib/systemd/system-generators \
+		$(DESTDIR)/usr/lib/systemd/system/network-online.target.wants \
 		$(DESTDIR)/usr/lib/tmpfiles.d \
 		$(DESTDIR)/etc/env.d \
 		$(DESTDIR)/usr/share/ssh
 	install -m 755 bin/* $(DESTDIR)/usr/bin
 	install -m 755 scripts/* $(DESTDIR)/usr/lib/coreos
 	install -m 644 systemd/system/* $(DESTDIR)/usr/lib/systemd/system
+	ln -sf ../wait-for-network.service \
+		$(DESTDIR)/usr/lib/systemd/system/network-online.target.wants
 	install -m 644 systemd/network/* $(DESTDIR)/usr/lib/systemd/network
 	install -m 755 systemd/system-generators/* \
 		$(DESTDIR)/usr/lib/systemd/system-generators
